@@ -2,6 +2,23 @@
   Claire Valant's Tread Tech Test
   January 25, 2019
 
-  1. Header Styles
-  2. 
+  1. General Styles
+  2. Header Styles
+  3.
 */
+
+
+/* 1. General Styles */
+body {
+  background: linear-gradient(to bottom, #92c6fa, #ff7d66);
+  background-repeat: no-repeat;
+}
+
+/* 2. Header Styles */
+
+h1 {
+  color: white;
+  text-transform: uppercase;
+}
+
+/* 3. Gallery Styles */

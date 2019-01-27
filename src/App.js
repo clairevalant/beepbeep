@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import firebase from 'firebase';
 import './App.css';
 
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyC746SSZeH4v-4dlPyy_zkMS8WZY7NJ9JA",
+  authDomain: "clairevalant-moodboard.firebaseapp.com",
+  databaseURL: "https://clairevalant-moodboard.firebaseio.com",
+  projectId: "clairevalant-moodboard",
+  storageBucket: "clairevalant-moodboard.appspot.com",
+  messagingSenderId: "890108915166"
+};
+firebase.initializeApp(config);
+
+// specify we want to use GitHub to provide authentication
+const provider = new firebase.auth.GithubAuthProvider();
+const auth = firebase.auth();
+
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      user: null
+    }
+  }
+
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+        <header>
+          <h1>Moodboard</h1>
         </header>
       </div>
     );
