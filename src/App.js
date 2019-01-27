@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import './App.css';
+import { throws } from 'assert';
 
 // Initialize Firebase
 var config = {
@@ -21,9 +22,49 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: null
+      user: null,
+      post: "",
+      posts: {}
     }
   }
+
+  componentDidMount() {
+    // if the user has recently signed in, sign them in again
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          user: user
+        }, () => {
+          // reference Firebase database and add user's name
+          this.dbRef = firebase.database().ref(`/${this.state.user.uid}`);
+          // add an event listener to get user's data in Firebase
+          this.dbRef.on("value", (snapshot) => {
+            // check to see if snapshot.val is null, and if it is, set a new object. if it's got data, set the state to snapshot.val
+            this.setState({
+              // if snapshot.val is falsey, leave posts as empty obj
+              posts: snapshot.val() || {}
+            });
+          });
+        });
+      };
+    });
+  }
+
+  logIn = () => {
+    auth.signInWithPopup(provider).then((result => {
+      this.setState({
+        user: result.user
+      });
+    }));
+  };
+
+  logOut = () => {
+    auth.signOut().then(() => {
+      this.setState({
+        user: null
+      });
+    });
+  };
 
 
   render() {
