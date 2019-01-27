@@ -1,24 +1,57 @@
 /* 
   Claire Valant's Tread Tech Test
-  January 25, 2019
+  January 27, 2019
 
   1. General Styles
   2. Header Styles
   3.
 */
 
-
 /* 1. General Styles */
+
+html {
+  font-size: 62.5%;
+  font-family: sans-serif;
+}
+
 body {
-  background: linear-gradient(to bottom, #92c6fa, #ff7d66);
+  padding: 0;
+  margin: 0;
+  font-size: 1.8rem;
+  background: linear-gradient(to bottom, #92c6fa, pink);
   background-repeat: no-repeat;
 }
 
 /* 2. Header Styles */
 
+header {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.welcomeMsg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.wrapper {
+  width: 90vw;
+}
+
 h1 {
+  font-size: 9rem;
   color: white;
   text-transform: uppercase;
+  margin: 40px 0 0 0;
+}
+
+.profilePic {
+  height: 40px;
+  border-radius: 50px;
+  margin-left: 10px;
 }
 
 /* 3. Gallery Styles */
