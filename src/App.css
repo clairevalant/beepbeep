@@ -22,6 +22,7 @@ html {
 }
 
 body {
+  min-height: 100vh;
   padding: 0;
   margin: 0;
   font-size: 1.8rem;
@@ -32,21 +33,20 @@ body {
 
 .btn,
 input {
-  border: 2px solid pink;
+  border: 1px solid pink;
   border-radius: 10px;
   padding: 10px;
   margin: 0 5px;
 }
 
 .btn {
-  text-transform: uppercase;
-  background: white;
+  /* text-transform: uppercase; */
+  background: rgba(255, 255, 255, 0.733);
   color: #92c6fa;
 }
 
 .btn:hover{
-  background: rgba(255, 192, 203, 0.698);
-  color: white;
+  background: rgb(255, 255, 255);
 }
 
 /* 2. Header Styles */
@@ -96,7 +96,7 @@ h1 {
 /* 3. Form Styles */
 
 form {
-  margin-top: 40px;
+  margin: 40px 0;
   width: 70%;
 }
 
@@ -114,6 +114,33 @@ input:first-of-type {
 
 /* 4. Gallery Styles */
 
-main {
-  height: 70vh;
+.login {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.post {
+  display: block;
+  width: calc(100% / 4 - 10px);
+  margin: 5px;
+}
+
+.galleryImage {
+  width: 100%;
+}
+
+.postCap {
+  display: flex;
+  flex-direction: column;
+}
+
+.postCap:first-child {
+  margin-left: 0;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  flex-wrap: wrap;
 }

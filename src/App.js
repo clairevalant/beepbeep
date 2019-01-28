@@ -127,11 +127,13 @@ class App extends Component {
                 <input className="btn" type="submit" value="Post"/>
               </form>
 
-              <Gallery posts={this.state.allPosts} ref={this.dbRef}/>
+              <Gallery posts={this.state.allPosts} dbRef={this.dbRef}/>
             </div>
           </main>
           : <main>
-            <p>Post your favourite images to create a visual diary of how you're feeling. Get started by logging in with Google!</p>
+            <div className="wrapper">
+              <p>Post your favourite images to create a visual diary of how you're feeling. Get started by <span className="login" onClick={this.logIn}>logging in</span> with Google!</p>
+            </div>
           </main>
         }
       </div>
