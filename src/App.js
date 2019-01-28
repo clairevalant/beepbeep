@@ -2,9 +2,9 @@
 // January 27, 2019
 
 import React, { Component } from 'react';
+import Gallery from './Gallery.js';
 import firebase from 'firebase';
 import './App.css';
-import { throws } from 'assert';
 
 // Initialize Firebase
 var config = {
@@ -45,7 +45,6 @@ class App extends Component {
           this.dbRef.on("value", (snapshot) => {
             // check to see if snapshot.val is null, and if it is, set an empty object. if it's got data, set the state to snapshot.val
             this.setState({
-              // if snapshot.val is falsey, leave posts as empty obj
               allPosts: snapshot.val() || {}
             });
           });
@@ -109,7 +108,7 @@ class App extends Component {
       <div className="App">
         <header>
           <div className="wrapper">
-            {this.state.user ? <button className="logButton" onClick={this.logOut}>Logout</button> : <button className="logButton" onClick={this.logIn}>Login</button>}
+            {this.state.user ? <button className="btn logButton" onClick={this.logOut}>Logout</button> : <button className="btn logButton" onClick={this.logIn}>Login</button>}
             {/* Use ternary operators to display the appropriate header info */}
             <h1>Moodboard</h1>
             {this.state.user ? <div className="welcomeMsg"><p>Welcome back to Moodboard, {this.state.user.displayName}</p><img className="profilePic" src={this.state.user.photoURL} alt="your Google photo" /></div>
@@ -125,19 +124,14 @@ class App extends Component {
                 <input type="text" value={this.state.image} id="image" placeholder="link to image" onChange={this.handleChange}/>
                 <label htmlFor="caption" className="visuallyhidden">Caption</label>
                 <input type="text" value={this.state.caption} id="caption" placeholder="caption" onChange={this.handleChange}/>
-                <input type="submit" value="Post"/>
+                <input className="btn" type="submit" value="Post"/>
               </form>
 
-              <section id="gallery">
-
-              </section>
+              <Gallery posts={this.state.allPosts} ref={this.dbRef}/>
             </div>
           </main>
           : <main>
-            <p>Post your favourite images to create a visual diary of how you're feeling. Get started by logging in with Google.</p>
-            <section id="gallery">
-            
-            </section>
+            <p>Post your favourite images to create a visual diary of how you're feeling. Get started by logging in with Google!</p>
           </main>
         }
       </div>

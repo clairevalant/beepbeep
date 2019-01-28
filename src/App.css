@@ -25,42 +25,49 @@ body {
   padding: 0;
   margin: 0;
   font-size: 1.8rem;
+  color: white;
+  background: linear-gradient(to bottom, #92c6fa, pink);
+  background-repeat: no-repeat;
 }
 
-.logButton,
-input[type=submit] {
-  text-transform: uppercase;
-  background: white;
-  color: #92c6fa;
-}
-
-.logButton,
-input,
-input[type=submit] {
+.btn,
+input {
   border: 2px solid pink;
   border-radius: 10px;
   padding: 10px;
   margin: 0 5px;
 }
 
-header,
-main,
-form {
-  display: flex;
-  justify-content: center;
-  text-align: center;
+.btn {
+  text-transform: uppercase;
+  background: white;
+  color: #92c6fa;
+}
+
+.btn:hover{
+  background: rgba(255, 192, 203, 0.698);
+  color: white;
 }
 
 /* 2. Header Styles */
 
 header {
   height: 30vh;
-  background: #92c6fa;
 }
 
-/* .logButton {
+header .wrapper {
+  text-align: center;
+}
 
-} */
+header .wrapper div {
+  margin: 0 auto;
+}
+
+.logButton {
+  position: sticky;
+  top: 10px;
+  left:100%;
+}
 
 .welcomeMsg {
   display: flex;
@@ -70,13 +77,14 @@ header {
 
 .wrapper {
   width: 90vw;
+  margin: 0 auto;
 }
 
 h1 {
   font-size: 9rem;
   color: white;
   text-transform: uppercase;
-  margin: 40px 0 0 0;
+  margin: 10px 0 0 0;
 }
 
 .profilePic {
@@ -100,10 +108,12 @@ input:focus {
   box-shadow: 0px 10px 10px pink;
 }
 
+input:first-of-type {
+  margin-left: 0;
+}
+
 /* 4. Gallery Styles */
 
 main {
   height: 70vh;
-  background: linear-gradient(to bottom, #92c6fa, pink);
-  background-repeat: no-repeat;
 }
