@@ -28,6 +28,8 @@ class App extends Component {
       user: null,
       image: "",
       caption: "",
+      displayUsersGallery: true,
+      userPosts: {},
       allPosts: {}
     }
   }
@@ -40,14 +42,30 @@ class App extends Component {
           user: user
         }, () => {
           // reference this user's specific Firebase node
-          this.dbRef = firebase.database().ref(`/${this.state.user.uid}`);
+          this.dbRefUser = firebase.database().ref(`/${this.state.user.uid}`);
+
+          // reference to fb in general to display all posts to logged in user
+          this.dbRefAll = firebase.database().ref("/collection");
+
+          // reference to fb to display general posts when logged out (stretch goal)
+          // this.dbRefLogOut = firebase.database().ref();
+
           // add an event listener to get user's data in Firebase
-          this.dbRef.on("value", (snapshot) => {
-            // check to see if snapshot.val is null, and if it is, set an empty object. if it's got data, set the state to snapshot.val
+          // check to see if snapshot.val is null, and if it is, set an empty object. if it's got data, set the state to snapshot.val
+          this.dbRefUser.on("value", (snapshot) => {
             this.setState({
-              allPosts: snapshot.val() || {}
+              userPosts: snapshot.val() || {}
             });
           });
+
+          // do the same to get all user posts
+          this.dbRefAll.on("value", (snapshot) => {
+            this.setState({
+              allPosts: snapshot.val() || {}
+            })
+            
+          });
+
         });
       };
     });
@@ -55,14 +73,13 @@ class App extends Component {
 
 // turn off event listener
   componentWillUnmount() {
-    if (this.dbref) {
-      this.dbRef.off();
+    if (this.dbrefUser) {
+      this.dbRefUser.off();
     }
   }
 
   logIn = () => {
     auth.signInWithPopup(provider).then((result => {
-      console.log(result);
       this.setState({
         user: result.user
       });
@@ -92,14 +109,28 @@ class App extends Component {
       caption: ""
     })
 
-    // push post to Firebase
-    this.dbRef.push(post);
+    // push post to user's Firebase & whole collection
+    this.dbRefUser.push(post);
+    this.dbRefAll.push(post);
+
   }
 
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
+  }
+
+  allPosts = () => {
+    this.setState({
+      displayUsersGallery: false
+    })
+  }
+
+  myPosts = () => {
+    this.setState({
+      displayUsersGallery: true
+    })
   }
 
 
@@ -127,9 +158,18 @@ class App extends Component {
                 <input className="btn" type="submit" value="Post"/>
               </form>
 
-              <Gallery posts={this.state.allPosts} dbRef={this.dbRef}/>
+              {/* display all posts or just see your own */}
+              <i class="fas fa-users" title="All posts" onClick={this.allPosts}></i>
+              <i class="fas fa-user" title="Your posts" onClick={this.myPosts}></i>
+
+              {/* display a gallery of user's posts or all posts (default is user's own) */}
+              <Gallery
+                posts={this.state.displayUsersGallery ? this.state.userPosts : this.state.allPosts}
+                dbRef={this.state.displayUsersGallery ? this.dbRefUser : this.dbRefAll}
+              />
             </div>
           </main>
+
           : <main>
             <div className="wrapper">
               <p>Post your favourite images to create a visual diary of how you're feeling. Get started by <span className="login" onClick={this.logIn}>logging in</span> with Google!</p>

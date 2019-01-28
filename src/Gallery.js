@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 class Gallery extends Component {
+
     // delete this post from user's node
     deletePost = (post) => {
         if (window.confirm("Are you sure you want to delete this post?")) {
@@ -25,15 +26,15 @@ class Gallery extends Component {
         return (
             // post each image and caption in allPosts if there are existing posts
             <div className="gallery">
-                {this.props.posts ? 
+                {this.props.posts ?
                     Object.entries(this.props.posts).map(post => {
                         return(
                             <div className="post" key={post[0]}>
-                                <img className="galleryImage" src={post[1].image} alt="post you added"/>
-                                <div>
+                                <img className="galleryImage" src={post[1].image} alt="moodboard post"/>
+                                <div className="overlay">
                                     <span className="postCap">{post[1].caption}</span>
-                                    <button className="btn" onClick={() => {this.deletePost(post[0])}}>Delete</button>
-                                    <button className="btn" onClick={() => {this.sharePost(post[1].image)}}>Share</button>
+                                    <button className="btn dlt" onClick={() => {this.deletePost(post[1])}}>Delete</button>
+                                    <button className="btn share" onClick={() => {this.sharePost(post[1].image)}}>Share</button>
                                 </div>
                             </div>
                         );

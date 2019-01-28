@@ -36,7 +36,7 @@ input {
   border: 1px solid pink;
   border-radius: 10px;
   padding: 10px;
-  margin: 0 5px;
+  margin: 5px;
 }
 
 .btn {
@@ -97,7 +97,14 @@ h1 {
 
 form {
   margin: 40px 0;
-  width: 70%;
+  display: block;
+}
+
+.fas {
+  margin: 5px;
+  cursor: pointer;
+  font-size: 2rem;
+  display: inline-block;
 }
 
 input {
@@ -113,6 +120,10 @@ input:first-of-type {
 }
 
 /* 4. Gallery Styles */
+
+.dlt {
+  margin-left: 0;
+}
 
 .login {
   text-decoration: underline;
@@ -132,10 +143,6 @@ input:first-of-type {
 .postCap {
   display: flex;
   flex-direction: column;
-}
-
-.postCap:first-child {
-  margin-left: 0;
 }
 
 .gallery {
