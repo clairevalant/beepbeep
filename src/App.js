@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import './App.css';
+import { throws } from 'assert';
 
 // Initialize Firebase
 var config = {
@@ -25,8 +26,9 @@ class App extends Component {
     super();
     this.state = {
       user: null,
-      post: "",
-      posts: {}
+      image: "",
+      caption: "",
+      allPosts: {}
     }
   }
 
@@ -37,14 +39,14 @@ class App extends Component {
         this.setState({
           user: user
         }, () => {
-          // reference Firebase database and add user's name
+          // reference this user's specific Firebase node
           this.dbRef = firebase.database().ref(`/${this.state.user.uid}`);
           // add an event listener to get user's data in Firebase
           this.dbRef.on("value", (snapshot) => {
-            // check to see if snapshot.val is null, and if it is, set a new object. if it's got data, set the state to snapshot.val
+            // check to see if snapshot.val is null, and if it is, set an empty object. if it's got data, set the state to snapshot.val
             this.setState({
               // if snapshot.val is falsey, leave posts as empty obj
-              posts: snapshot.val() || {}
+              allPosts: snapshot.val() || {}
             });
           });
         });
@@ -76,26 +78,66 @@ class App extends Component {
     });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    // create a new object with image and caption which we will push to database as a post
+    const post = {
+      image: this.state.image,
+      caption: this.state.caption
+    }
+
+    // reset the state for next post
+    this.setState({
+      image: "",
+      caption: ""
+    })
+
+    // push post to Firebase
+    this.dbRef.push(post);
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
 
   render() {
     return (
       <div className="App">
         <header>
           <div className="wrapper">
-            {this.state.user ? <button onClick={this.logOut}>Logout</button> : <button onClick={this.logIn}>Login</button>}
+            {this.state.user ? <button className="logButton" onClick={this.logOut}>Logout</button> : <button className="logButton" onClick={this.logIn}>Login</button>}
             {/* Use ternary operators to display the appropriate header info */}
             <h1>Moodboard</h1>
             {this.state.user ? <div className="welcomeMsg"><p>Welcome back to Moodboard, {this.state.user.displayName}</p><img className="profilePic" src={this.state.user.photoURL} alt="your Google photo" /></div>
-            : <p>Welcome to Moodboard. Post your favourite images to create a visual diary of how you're feeling. Get started by logging in with Google.</p>}
+              : <p className="welcomeMsg">Welcome to Moodboard!</p>}
           </div>
         </header>
 
         {this.state.user ? 
           <main>
-            
+            <div className="wrapper">
+              <form onSubmit={this.handleSubmit}>
+                <label htmlFor="image" className="visuallyhidden">Link to image</label>
+                <input type="text" value={this.state.image} id="image" placeholder="link to image" onChange={this.handleChange}/>
+                <label htmlFor="caption" className="visuallyhidden">Caption</label>
+                <input type="text" value={this.state.caption} id="caption" placeholder="caption" onChange={this.handleChange}/>
+                <input type="submit" value="Post"/>
+              </form>
+
+              <section id="gallery">
+
+              </section>
+            </div>
           </main>
           : <main>
-
+            <p>Post your favourite images to create a visual diary of how you're feeling. Get started by logging in with Google.</p>
+            <section id="gallery">
+            
+            </section>
           </main>
         }
       </div>
