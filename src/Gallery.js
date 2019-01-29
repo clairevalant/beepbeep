@@ -35,7 +35,7 @@ class Gallery extends Component {
                         return(
                             <div className="post" key={post[0]}>
                                 {console.log(post)}
-                                <img className="galleryImage" src={post[1].image} alt="moodboard post"/>
+                                <img className="galleryImage" src={post[1].image} alt=""/>
                                 <div className="overlay">
                                     <span className="postCap">{post[1].caption}</span>
                                     {/* users can only delete posts on their own board */}

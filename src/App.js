@@ -18,7 +18,7 @@ var config = {
 firebase.initializeApp(config);
 
 // specify we want to use Google to provide authentication
-const provider = new firebase.auth.GoogleAuthProvider;
+const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
 
 class App extends Component {
