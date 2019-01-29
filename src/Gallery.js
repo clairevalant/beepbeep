@@ -6,6 +6,10 @@ class Gallery extends Component {
 
     // delete this post from user's node
     deletePost = (post) => {
+        console.log(this.props.dbRef);
+        console.log(post);
+        
+        
         if (window.confirm("Are you sure you want to delete this post?")) {
             this.props.dbRef.child(post).remove();
         }
@@ -30,10 +34,12 @@ class Gallery extends Component {
                     Object.entries(this.props.posts).map(post => {
                         return(
                             <div className="post" key={post[0]}>
+                                {console.log(post)}
                                 <img className="galleryImage" src={post[1].image} alt="moodboard post"/>
                                 <div className="overlay">
                                     <span className="postCap">{post[1].caption}</span>
-                                    <button className="btn dlt" onClick={() => {this.deletePost(post[1])}}>Delete</button>
+                                    {/* users can only delete posts on their own board */}
+                                    <button className={this.props.isUserGallery ? "btn dlt" : "hide"} onClick={() => {this.deletePost(post[0])}}>Delete</button>
                                     <button className="btn share" onClick={() => {this.sharePost(post[1].image)}}>Share</button>
                                 </div>
                             </div>

@@ -125,6 +125,10 @@ input:first-of-type {
   margin-left: 0;
 }
 
+.hide {
+  display: none;
+}
+
 .login {
   text-decoration: underline;
   cursor: pointer;

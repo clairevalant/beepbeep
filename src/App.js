@@ -94,13 +94,26 @@ class App extends Component {
     });
   };
 
+  checkLink = (link) => {
+    return link.match(/\.(jpeg|jpg|gif|png)$/) ? true : false;
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
-    // create a new object with image and caption which we will push to database as a post
-    const post = {
-      image: this.state.image,
-      caption: this.state.caption
+    if (this.checkLink(this.state.image)) {
+      // create a new object with image and caption which we will push to database as a post
+      const post = {
+        image: this.state.image,
+        caption: this.state.caption
+      }
+
+      // push post to user's Firebase & whole collection
+      this.dbRefUser.push(post);
+      this.dbRefAll.push(post);
+
+    } else {
+      alert("Please only add an image with the extension .jpeg, .jpg, .png, or .gif");
     }
 
     // reset the state for next post
@@ -108,11 +121,6 @@ class App extends Component {
       image: "",
       caption: ""
     })
-
-    // push post to user's Firebase & whole collection
-    this.dbRefUser.push(post);
-    this.dbRefAll.push(post);
-
   }
 
   handleChange = e => {
@@ -163,7 +171,8 @@ class App extends Component {
               <i class="fas fa-user" title="Your posts" onClick={this.myPosts}></i>
 
               {/* display a gallery of user's posts or all posts (default is user's own) */}
-              <Gallery
+              <Gallery 
+                isUserGallery = {this.state.displayUsersGallery}
                 posts={this.state.displayUsersGallery ? this.state.userPosts : this.state.allPosts}
                 dbRef={this.state.displayUsersGallery ? this.dbRefUser : this.dbRefAll}
               />
