@@ -1,6 +1,3 @@
-// Claire Valant's Tread Tech Challenge
-// January 27, 2019
-
 import React, { Component } from 'react';
 import Gallery from './Gallery.js';
 import firebase from 'firebase';
